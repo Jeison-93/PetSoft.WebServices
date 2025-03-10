@@ -1,0 +1,6 @@
+@PetSoft.WebServices_HostAddress = http://localhost:5046
+
+GET {{PetSoft.WebServices_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
