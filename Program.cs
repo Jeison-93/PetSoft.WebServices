@@ -1,3 +1,9 @@
+using Google.Protobuf.WellKnownTypes;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using PetSoft.WebServices.Data.Models;
+using PetSoft.WebServices.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +12,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connectionString = builder.Configuration.GetSection("ContextHelper").Get<ContextHelper>();
+
+builder.Services.AddDbContextPool<PetsoftdbContext>
+    (option => option.UseMySql(connectionString?.ConnectionString, ServerVersion.AutoDetect(connectionString?.ConnectionString)));
 
 var app = builder.Build();
 
