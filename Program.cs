@@ -1,12 +1,16 @@
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using PetSoft.WebServices.Application;
+using PetSoft.WebServices.Application.Interface;
 using PetSoft.WebServices.Data.Models;
 using PetSoft.WebServices.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IGenericTableAppService, GenericTableAppService>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
