@@ -44,7 +44,11 @@ namespace PetSoft.WebServices.Application
             });
             return result;
         }
-        
+
+        /// <summary>
+        /// servicio para devolver los tipos de los servicios
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<GenericTableDto> GetServiceType()
         {
             var result = _context.Servicetype
@@ -58,6 +62,10 @@ namespace PetSoft.WebServices.Application
             return result;
         }
 
+        /// <summary>
+        /// servicio para devolver los tipos de especies
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<GenericTableDto> GetSpecies()
         {
             var result = _context.Species
@@ -70,6 +78,10 @@ namespace PetSoft.WebServices.Application
             return result;
         }
 
+        /// <summary>
+        /// servicio para devolver los tipos de usuarios
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<GenericTableDto> GetUserType()
         {
             var result = _context.Usertype
