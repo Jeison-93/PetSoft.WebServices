@@ -33,7 +33,7 @@ namespace PetSoft.WebServices.Application
                     StateDescription = s.State == 1 ? "Activo" : "Inactivo"
                 }).FirstOrDefault();// instruccion para recuperar el primer dato de la consulta
 
-            return result;
+            return result != null ? result : new UserGetDto();
         }
 
         public IEnumerable<UserGetDto> GetAll()

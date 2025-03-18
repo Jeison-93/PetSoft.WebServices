@@ -22,11 +22,6 @@ namespace PetSoft.WebServices.Controllers
             return _userAppService.GetAll();
         }
 
-        [HttpGet]
-        [Route("Get")]
-        public UserGetDto Get(int id)
-        {
-            return _userAppService.Get(id);
-        }
+
     }
 }
