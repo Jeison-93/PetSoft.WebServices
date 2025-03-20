@@ -1,6 +1,6 @@
 ﻿namespace PetSoft.WebServices.Data.Dto.User
 {
-    public class UserAutDto
+    public class UserAuthDto
     {
         public string DocumentType { get; set; } = null!;
 
