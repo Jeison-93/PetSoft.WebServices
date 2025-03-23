@@ -62,12 +62,64 @@ namespace PetSoft.WebServices.Application
 
         public string Save(UserSaveDto parameter)
         {
-            throw new NotImplementedException();
+            if (ExistUser(parameter.Email))
+            {
+                return "El correo ya está registrado";
+            }
+
+            if (ExistUserByDoc(parameter.DocumentNumber))
+            {
+                return "el numero de documento ya existe en otro registro";
+            }
+
+
+            User user =new();
+            user.DocumentType = parameter.DocumentType;
+            user.DocumentNumber = parameter.DocumentNumber;
+            user.Name = parameter.Name;
+            user.LastName = parameter.LastName;
+            user.Password = parameter.Password;
+            user.Phone = parameter.Phone;
+            user.Email = parameter.Email;
+            user.Addresss = parameter.Addresss;
+            user.UserType = parameter.UserType;
+            user.State = 1;
+
+            _context.User.Add(user);
+            _context.SaveChanges();
+
+
+            return "Registro Exitoso";
+        }
+        
+        private bool ExistUserByDoc(string documentNumber)
+        {
+            return _context.User.Any(f => f.DocumentNumber == documentNumber);
+        }
+
+        private bool ExistUser(string email)
+        {
+            return _context.User.Any(f => f.Email == email);
         }
 
         public string Update(UserUpdateDto parameter)
         {
-            throw new NotImplementedException();
+            User user = _context.User.FirstOrDefault(f => f.Id == parameter.Id);
+            if (user == null) 
+            {
+                return "El usuario no existe";
+            }
+
+            user.Password = parameter.Password;
+            user.Phone = parameter.Phone;
+            user.Addresss = parameter.Addresss;
+            user.UserType = parameter.UserType;
+            user.State = parameter.State;
+
+            _context.User.Update(user);
+            _context.SaveChanges();
+
+            return "Se actualizó correctamente";
         }
     }
 }

@@ -22,6 +22,18 @@ namespace PetSoft.WebServices.Controllers
             return _userAppService.GetAll();
         }
 
+        [HttpPost]
+        [Route("Save")]
+        public string Save(UserSaveDto parameter)
+        {
+            return _userAppService.Save(parameter);
+        }
 
+        [HttpPut]
+        [Route("Update")]
+        public string Update(UserUpdateDto parameter)
+        {
+            return _userAppService.Update(parameter);
+        }
     }
 }

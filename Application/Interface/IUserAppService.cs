@@ -16,6 +16,7 @@ namespace PetSoft.WebServices.Application.Interface
         /// </summary>
         /// <returns></returns>
         public IEnumerable <UserGetDto> GetAll();
+
         /// <summary>
         /// Mètodo para crear un usuario
         /// </summary>
