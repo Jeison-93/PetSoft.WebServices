@@ -8,11 +8,12 @@ using PetSoft.WebServices.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// REGISTRAR LA INTERFACE Y LA CLASE EN EL PROGRAMA
 builder.Services.AddScoped<IGenericTableAppService, GenericTableAppService>();
 builder.Services.AddScoped<IUserAppService, UserAppService>();
 builder.Services.AddScoped<IClientAppService, ClientAppService>();
 builder.Services.AddScoped<IAuthAppService, UserAuthAppService>();
+builder.Services.AddScoped<IPetAppService, PetAppService>();
 
 
 builder.Services.AddControllers();

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PetSoft.WebServices.Application;
 using PetSoft.WebServices.Application.Interface;
 using PetSoft.WebServices.Data.Dto;
+using PetSoft.WebServices.Data.Dto.Client;
 
 namespace PetSoft.WebServices.Controllers
 {
@@ -35,6 +36,20 @@ namespace PetSoft.WebServices.Controllers
         public IEnumerable<ClientGetDto> GetState(int state)
         {
             return _ClientAppService.GetState(state);
+        }
+
+        [HttpPost]
+        [Route("Save")]
+        public string Save(ClientSaveDto parameter)
+        {
+            return _ClientAppService.Save(parameter);
+        }
+
+        [HttpPut]
+        [Route("Update")]
+        public string Update(ClientUpdateDto parameter)
+        {
+            return _ClientAppService.Update(parameter);
         }
 
     }

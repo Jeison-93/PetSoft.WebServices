@@ -17,21 +17,21 @@ namespace PetSoft.WebServices.Application
         {
             var result = _context.User
                 .Where(f => f.Id == id)
-                .Select(s => new UserGetDto()
-                {
-                    Id = s.Id,
-                    DocumentType = s.DocumentType,
-                    DocumentNumber = s.DocumentNumber,
-                    Name = s.Name,
-                    LastName = s.LastName,
-                    Password = s.Password,
-                    Phone = s.Phone,
-                    Email = s.Email,
-                    Addresss = s.Addresss,
-                    UserType = s.UserType,
-                    State = s.State,
-                    StateDescription = s.State == 1 ? "Activo" : "Inactivo"
-                }).FirstOrDefault();// instruccion para recuperar el primer dato de la consulta
+                    .Select(s => new UserGetDto()
+                  {
+                        Id = s.Id,
+                        DocumentType = s.DocumentType,
+                        DocumentNumber = s.DocumentNumber,
+                        Name = s.Name,
+                        LastName = s.LastName,
+                        Password = s.Password,
+                        Phone = s.Phone,
+                        Email = s.Email,
+                        Addresss = s.Addresss,
+                        UserType = s.UserType,
+                        State = s.State,
+                        StateDescription = s.State == 1 ? "Activo" : "Inactivo"
+                  }).FirstOrDefault();// instruccion para recuperar el primer dato de la consulta
 
             return result != null ? result : new UserGetDto();
         }
@@ -104,22 +104,31 @@ namespace PetSoft.WebServices.Application
 
         public string Update(UserUpdateDto parameter)
         {
-            User user = _context.User.FirstOrDefault(f => f.Id == parameter.Id);
-            if (user == null) 
+            try
             {
-                return "El usuario no existe";
+                User user = _context.User.FirstOrDefault(f => f.Id == parameter.Id);
+                if (user == null)
+                {
+                    return "El usuario no existe";
+                }
+
+                user.Password = parameter.Password;
+                user.Phone = parameter.Phone;
+                user.Addresss = parameter.Addresss;
+                user.UserType = parameter.UserType;
+                user.State = parameter.State;
+
+                _context.User.Update(user);
+                _context.SaveChanges();
+
+                return "Se actualizó correctamente";
             }
+            catch (Exception ex)
+            {
 
-            user.Password = parameter.Password;
-            user.Phone = parameter.Phone;
-            user.Addresss = parameter.Addresss;
-            user.UserType = parameter.UserType;
-            user.State = parameter.State;
-
-            _context.User.Update(user);
-            _context.SaveChanges();
-
-            return "Se actualizó correctamente";
+                return ex.Message;
+            }
+            
         }
     }
 }
