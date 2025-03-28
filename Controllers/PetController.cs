@@ -22,6 +22,16 @@ namespace PetSoft.WebServices.Controllers
         {
             return _PetAppService.Get(id);
         }
+
+        [HttpGet]
+        [Route("GetAll")]
+
+        public IEnumerable<PetGetDto> GetAll(int Client)
+        { 
+            return _PetAppService.GetAll(Client);
+        }
+
+
         [HttpPost]
         [Route("save")]
 
