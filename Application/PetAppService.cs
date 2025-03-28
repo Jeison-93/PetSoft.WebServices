@@ -34,6 +34,29 @@ namespace PetSoft.WebServices.Application
             return result != null ? result : new PetGetDto();
         }
 
+        public IEnumerable<PetGetDto> GetAll(int Client)
+        {
+            {
+                var result = _context.Pet
+                    .Where (f => f.Client == Client)
+                     .Select(s => new PetGetDto()
+                     {
+                         Id= s.Id,
+                         Name = s.Name,
+                         Species = s.Species,
+                         Breed = s.Breed,
+                         Age = s.Age,
+                         Weight = s.Weight,
+                         Client = s.Client,
+                         State = s.State,
+
+                     });
+
+                return result;
+            }
+        }
+
+      
         public string Save(PetSaveDto parameter)
         {
             try
