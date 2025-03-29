@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PetSoft.WebServices.Application;
 using PetSoft.WebServices.Application.Interface;
+using PetSoft.WebServices.Data.Dto.Client;
 using PetSoft.WebServices.Data.Dto.Pet;
 
 namespace PetSoft.WebServices.Controllers
@@ -38,6 +39,13 @@ namespace PetSoft.WebServices.Controllers
         public string save(PetSaveDto parameter)
         {
             return _PetAppService.Save(parameter);
+        }
+
+        [HttpPut]
+        [Route("Update")]
+        public string Update(PetUpdateDto parameter)
+        {
+            return _PetAppService.Update(parameter);
         }
     }
 }

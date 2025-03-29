@@ -84,6 +84,34 @@ namespace PetSoft.WebServices.Application
             }
         }
 
-      
+        public string Update(PetUpdateDto parameter)
+        {
+            try
+            {
+                Pet pet = _context.Pet.FirstOrDefault(f => f.Id == parameter.Id);
+                if (pet == null)
+                {
+                    return "El usuario no existe";
+                }
+
+                pet.Name = parameter.Name;
+                pet.Species = parameter.Species;
+                pet.Breed = parameter.Breed;
+                pet.Age = parameter.Age;
+                pet.Weight = parameter.Weight;
+                pet.State = parameter.State;
+
+
+                _context.Pet.Update(pet);
+                _context.SaveChanges();
+
+                return "Se actualizó correctamente";
+            }
+            catch (Exception ex)
+            {
+
+                return ex.Message;
+            }
+        }
     }
 }

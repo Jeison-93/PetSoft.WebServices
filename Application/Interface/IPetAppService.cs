@@ -9,6 +9,7 @@ namespace PetSoft.WebServices.Application.Interface
         public string Save(PetSaveDto parameter);
 
         public IEnumerable <PetGetDto> GetAll(int Client);
-      
+        public string Update(PetUpdateDto parameter);
+
     }
 }
