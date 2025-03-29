@@ -2,6 +2,7 @@
 {
     public class PetUpdateDto
     {
+        public int Id { get; set; }
         public string Name { get; set; } = null!;
 
         public string Species { get; set; } = null!;
