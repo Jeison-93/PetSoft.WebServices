@@ -28,7 +28,7 @@ namespace PetSoft.WebServices.Controllers
         [Route("GetAll")]
 
         public IEnumerable<PetGetDto> GetAll(int Client)
-        { 
+        {
             return _PetAppService.GetAll(Client);
         }
 
@@ -46,6 +46,13 @@ namespace PetSoft.WebServices.Controllers
         public string Update(PetUpdateDto parameter)
         {
             return _PetAppService.Update(parameter);
+        }
+
+        [HttpPut]
+        [Route("ChangeState")]
+         public string ChangeState(int Id )
+        { 
+            return (_PetAppService.ChangeState(Id));
         }
     }
 }
