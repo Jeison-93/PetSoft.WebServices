@@ -52,5 +52,12 @@ namespace PetSoft.WebServices.Controllers
             return _ClientAppService.Update(parameter);
         }
 
+        [HttpPut]
+        [Route("ChangeState")]
+        public string ChangeState(int Id)
+        {
+            return (_ClientAppService.ChangeState(Id));
+        }
+
     }
 }

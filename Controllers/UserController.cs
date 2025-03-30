@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PetSoft.WebServices.Application;
 using PetSoft.WebServices.Application.Interface;
 using PetSoft.WebServices.Data.Dto;
 
@@ -34,6 +35,14 @@ namespace PetSoft.WebServices.Controllers
         public string Update(UserUpdateDto parameter)
         {
             return _userAppService.Update(parameter);
+        }
+
+
+        [HttpPut]
+        [Route("ChangeState")]
+        public string ChangeState(int Id)
+        {
+            return (_userAppService.ChangeState(Id));
         }
     }
 }

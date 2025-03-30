@@ -146,6 +146,31 @@ namespace PetSoft.WebServices.Application
             }
             
         }
+
+        public string ChangeState(int Id)
+        {
+            try
+            {
+                Client client = _context.Client.FirstOrDefault(f => f.Id == Id);
+                if (client == null)
+                {
+                    return "El usuario no existe";
+                }
+
+                client.State = (sbyte)(client.State == 1 ? 0 : 1);
+
+
+                _context.Client.Update(client);
+                _context.SaveChanges();
+
+                return "Se actualizó correctamente";
+            }
+            catch (Exception ex)
+            {
+
+                return ex.Message;
+            }
+        }
     }
     
 }
