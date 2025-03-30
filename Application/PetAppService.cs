@@ -4,6 +4,7 @@ using PetSoft.WebServices.Application.Interface;
 using PetSoft.WebServices.Data.Dto;
 using PetSoft.WebServices.Data.Dto.Pet;
 using PetSoft.WebServices.Data.Models;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PetSoft.WebServices.Application
 {
@@ -14,6 +15,32 @@ namespace PetSoft.WebServices.Application
         {
             _context = context;
         }
+
+        public string ChangeState(int Id)
+        {
+            try
+            {
+                Pet pet = _context.Pet.FirstOrDefault(f => f.Id == Id);
+                if (pet == null)
+                {
+                    return "El usuario no existe";
+                }
+
+                pet.State = (sbyte)(pet.State == 1 ? 0: 1);
+
+
+                _context.Pet.Update(pet);
+                _context.SaveChanges();
+
+                return "Se actualizó correctamente";
+            }
+            catch (Exception ex)
+            {
+
+                return ex.Message;
+            }
+        }
+
         public PetGetDto Get(int id)
         {
             var result = _context.Pet
