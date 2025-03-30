@@ -11,6 +11,7 @@ namespace PetSoft.WebServices.Application.Interface
         public  IEnumerable<ClientGetDto> GetState(int state);
         public string Save(ClientSaveDto parameter);
         public string Update(ClientUpdateDto parameter);
+        public string ChangeState(int Id);
       
     }
     

@@ -30,5 +30,7 @@ namespace PetSoft.WebServices.Application.Interface
         /// <returns></returns>
         public string Update(UserUpdateDto parameter);
 
+        public string ChangeState(int Id);
+
     }
 }
