@@ -1,21 +1,41 @@
-﻿using PetSoft.WebServices.Data.Dto;
-using PetSoft.WebServices.Data.Dto.Pet;
+﻿using PetSoft.WebServices.Data.DTO;
+using PetSoft.WebServices.Helpers;
 
 namespace PetSoft.WebServices.Application.Interface
 {
     public interface IPetAppService
     {
-        public PetGetDto Get(int id);
-        public string Save(PetSaveDto parameter);
-
-        public IEnumerable <PetGetDto> GetAll(int Client);
-        public string Update(PetUpdateDto parameter);
         /// <summary>
-        /// cambio de estado de la mascota
+        /// Recupera todas las Mascotas de un cliente
         /// </summary>
-        /// <param name="Id">id de la mascota</param>
         /// <returns></returns>
-        public string ChangeState(int Id);
+        public RequestResponse<IEnumerable<PetResponseDTO>> GetAll(int client);
+        /// <summary>
+        /// Recupera una mascota por ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public RequestResponse<PetResponseDTO> GetById(int id);
 
+        /// <summary>
+        /// Graba las mascotas la bd
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public RequestResponse<string> Save(PetRequestDTO request);
+
+        /// <summary>
+        /// Actualiza una mascota  en la bd
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public RequestResponse<string> Update(PetRequestUpdateDTO request);
+
+        /// <summary>
+        /// Cambia el estado de una mascota 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public RequestResponse<string> ChangeState(int id);
     }
 }

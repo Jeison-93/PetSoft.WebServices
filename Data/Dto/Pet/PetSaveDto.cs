@@ -2,7 +2,6 @@
 {
     public class PetSaveDto
     {
-
         public string Name { get; set; } = null!;
 
         public string Species { get; set; } = null!;
@@ -14,7 +13,5 @@
         public decimal? Weight { get; set; }
 
         public int Client { get; set; }
-
-
     }
 }
