@@ -16,6 +16,9 @@ namespace PetSoft.WebServices.Controllers
         {
             _ClientAppService = ClientAppService;
         }
+
+
+
         [HttpGet]
         [Route("Get")]
         public ClientGetDto Get(int id)

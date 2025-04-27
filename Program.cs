@@ -14,6 +14,7 @@ builder.Services.AddScoped<IUserAppService, UserAppService>();
 builder.Services.AddScoped<IClientAppService, ClientAppService>();
 builder.Services.AddScoped<IAuthAppService, UserAuthAppService>();
 builder.Services.AddScoped<IPetAppService, PetAppService>();
+builder.Services.AddScoped<IAppointmentsAppService, AppointmentsAppService>();
 
 
 builder.Services.AddControllers();
