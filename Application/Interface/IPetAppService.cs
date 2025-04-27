@@ -10,6 +10,11 @@ namespace PetSoft.WebServices.Application.Interface
 
         public IEnumerable <PetGetDto> GetAll(int Client);
         public string Update(PetUpdateDto parameter);
+        /// <summary>
+        /// cambio de estado de la mascota
+        /// </summary>
+        /// <param name="Id">id de la mascota</param>
+        /// <returns></returns>
         public string ChangeState(int Id);
 
     }

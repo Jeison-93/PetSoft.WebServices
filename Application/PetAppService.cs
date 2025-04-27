@@ -15,7 +15,11 @@ namespace PetSoft.WebServices.Application
         {
             _context = context;
         }
-
+        /// <summary>
+        /// camnbio de estado de la mascota
+        /// </summary>
+        /// <param name="Id">id de mascota </param>
+        /// <returns></returns>
         public string ChangeState(int Id)
         {
             try
