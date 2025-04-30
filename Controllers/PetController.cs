@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using PetSoft.WebServices.Application;
 using PetSoft.WebServices.Application.Interface;
-using PetSoft.WebServices.Data.Dto.Client;
-using PetSoft.WebServices.Data.Dto.Pet;
+using PetSoft.WebServices.Data.DTO;
+using PetSoft.WebServices.Helpers;
 
 namespace PetSoft.WebServices.Controllers
 {
@@ -11,52 +11,81 @@ namespace PetSoft.WebServices.Controllers
     [ApiController]
     public class PetController : ControllerBase
     {
-        private readonly IPetAppService _PetAppService;
-        public PetController(IPetAppService PetAppService)
-        {
-            _PetAppService = PetAppService;
-        }
-        [HttpGet]
-        [Route("Get")]
+        private readonly IPetAppService _petAppService;
 
-        public PetGetDto Get(int id)
+        public PetController(IPetAppService petAppService)
         {
-            return _PetAppService.Get(id);
+            _petAppService = petAppService;
         }
 
-        [HttpGet]
-        [Route("GetAll")]
-
-        public IEnumerable<PetGetDto> GetAll(int Client)
-        {
-            return _PetAppService.GetAll(Client);
-        }
-
-
-        [HttpPost]
-        [Route("save")]
-
-        public string save(PetSaveDto parameter)
-        {
-            return _PetAppService.Save(parameter);
-        }
-
-        [HttpPut]
-        [Route("Update")]
-        public string Update(PetUpdateDto parameter)
-        {
-            return _PetAppService.Update(parameter);
-        }
         /// <summary>
-        /// 
+        /// Recupera todas las mascotas de un cliente
         /// </summary>
-        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route(nameof(GetAllPets))]
+        public async Task<RequestResponse<IEnumerable<PetResponseDTO>>> GetAllPets(int client)
+        {
+            return await Task.Run(() =>
+            {
+                return _petAppService.GetAll(client);
+            });
+        }
+
+        /// <summary>
+        /// Recupera una Mascota por Id
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route(nameof(GetById))]
+        public async Task<RequestResponse<PetResponseDTO>> GetById(int Id)
+        {
+            return await Task.Run(() =>
+            {
+                return _petAppService.GetById(Id);
+            });
+        }
+
+        /// <summary>
+        /// Graba las mascotas de un cliente en la DB
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route(nameof(Save))]
+        public async Task<RequestResponse<string>> Save(PetRequestDTO request)
+        {
+            return await Task.Run(() =>
+            {
+                return _petAppService.Save(request);
+            });
+        }
+
+        /// <summary>
+        /// Actualiza una Mascota en la DB
+        /// </summary>
         /// <returns></returns>
         [HttpPut]
-        [Route("ChangeState")]
-         public string ChangeState(int Id )
-        { 
-            return (_PetAppService.ChangeState(Id));
+        [Route(nameof(Update))]
+        public async Task<RequestResponse<string>> Update(PetRequestUpdateDTO request)
+        {
+            return await Task.Run(() =>
+            {
+                return _petAppService.Update(request);
+            });
+        }
+
+        /// <summary>
+        /// Cambia el estado de una Mascota en la DB
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut]
+        [Route(nameof(ChangeState))]
+        public async Task<RequestResponse<string>> ChangeState(int Id)
+        {
+            return await Task.Run(() =>
+            {
+                return _petAppService.ChangeState(Id);
+            });
         }
     }
 }

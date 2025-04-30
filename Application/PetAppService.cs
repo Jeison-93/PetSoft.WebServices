@@ -1,147 +1,161 @@
-﻿using Google.Protobuf;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PetSoft.WebServices.Application.Interface;
-using PetSoft.WebServices.Data.Dto;
-using PetSoft.WebServices.Data.Dto.Pet;
+using PetSoft.WebServices.Data.DTO;
 using PetSoft.WebServices.Data.Models;
-using System.Security.Cryptography.X509Certificates;
+using PetSoft.WebServices.Helpers;
 
 namespace PetSoft.WebServices.Application
 {
-    public class PetAppService :  IPetAppService
+    public class PetAppService : IPetAppService
     {
-        readonly PetsoftdbContext _context;
+        private readonly PetsoftdbContext _context;
+
         public PetAppService(PetsoftdbContext context)
         {
             _context = context;
         }
-        /// <summary>
-        /// camnbio de estado de la mascota
-        /// </summary>
-        /// <param name="Id">id de mascota </param>
-        /// <returns></returns>
-        public string ChangeState(int Id)
+
+        public RequestResponse<IEnumerable<PetResponseDTO>> GetAll(int client)
         {
+            RequestResponse<IEnumerable<PetResponseDTO>> response = new();
             try
             {
-                Pet pet = _context.Pet.FirstOrDefault(f => f.Id == Id);
-                if (pet == null)
-                {
-                    return "El usuario no existe";
-                }
+                var result = _context.Pet.AsNoTracking()
+                    .Where(f => f.Client == client && f.State == 1)
+                    .Select(s => new PetResponseDTO()
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                        Breed = s.Breed,
+                        Age = s.Age,
+                        Weight = s.Weight,
+                        Species = s.Species,
+                        SpeciesDescription = s.SpeciesNavigation.Description,
+                        Client = s.Client,
+                        ClientName = $"{s.ClientNavigation.Name} {s.ClientNavigation.LastName}",
+                        State = s.State,
+                        StateDescription = s.State == 1 ? "Activo" : "Inactivo"
+                    });
 
-                pet.State = (sbyte)(pet.State == 1 ? 0: 1);
+                if (!result.Any())
+                    return response.CreateUnsuccessful("No se encontró información en la base de datos");
 
+                return response.CreateSuccessful(result);
+            }
+            catch (Exception ex)
+            {
 
-                _context.Pet.Update(pet);
+                return response.CreateError(ex.Message);
+            }
+        }
+
+        public RequestResponse<PetResponseDTO> GetById(int id)
+        {
+            RequestResponse<PetResponseDTO> response = new();
+            try
+            {
+                var result = _context.Pet.AsNoTracking()
+                    .Where(f => f.Id == id)
+                    .Select(s => new PetResponseDTO()
+                    {
+                        Id = s.Id,
+                        Name = s.Name,
+                        Breed = s.Breed,
+                        Age = s.Age,
+                        Weight = s.Weight,
+                        Species = s.Species,
+                        SpeciesDescription = s.SpeciesNavigation.Description,
+                        Client = s.Client,
+                        ClientName = $"{s.ClientNavigation.Name} {s.ClientNavigation.LastName}",
+                        State = s.State,
+                        StateDescription = s.State == 1 ? "Activo" : "Inactivo"
+                    }).FirstOrDefault();
+
+                if (result == null)
+                    return response.CreateUnsuccessful("No se encontró información en la base de datos");
+
+                return response.CreateSuccessful(result);
+            }
+            catch (Exception ex)
+            {
+                return response.CreateError(ex.Message);
+            }
+        }
+
+        public RequestResponse<string> Save(PetRequestDTO request)
+        {
+            RequestResponse<string> response = new();
+
+            try
+            {
+                var oPet = new Pet();
+
+                oPet.Name = request.Name;
+                oPet.Age = request.Age;
+                oPet.Species = request.Species;
+                oPet.Breed = request.Breed;
+                oPet.Weight = request.Weight;
+                oPet.Client = request.Client;
+                oPet.State = 1;
+                _context.Pet.Add(oPet);
+
                 _context.SaveChanges();
 
-                return "Se actualizó correctamente";
+                return response.CreateSuccessful("La Mascota se creó exitosamente");
             }
             catch (Exception ex)
             {
-
-                return ex.Message;
+                return response.CreateError(ex.Message);
             }
         }
 
-        public PetGetDto Get(int id)
+        public RequestResponse<string> Update(PetRequestUpdateDTO request)
         {
-            var result = _context.Pet
-             .Where(f => f.Id == id)
-                 .Select(s => new PetGetDto()
-                 {
- 
-                     Id = s.Id,
-                     Name = s.Name,
-                     Species = s.Species,
-                     Breed = s.Breed,
-                     Age = s.Age,
-                     Weight = s.Weight,
-                     Client = s.Client,
-                     State = s.State,
-                 }).FirstOrDefault();
-
-            return result != null ? result : new PetGetDto();
-        }
-
-        public IEnumerable<PetGetDto> GetAll(int Client)
-        {
-            {
-                var result = _context.Pet
-                    .Where (f => f.Client == Client)
-                     .Select(s => new PetGetDto()
-                     {
-                         Id= s.Id,
-                         Name = s.Name,
-                         Species = s.Species,
-                         Breed = s.Breed,
-                         Age = s.Age,
-                         Weight = s.Weight,
-                         Client = s.Client,
-                         State = s.State,
-
-                     });
-
-                return result;
-            }
-        }
-
-      
-        public string Save(PetSaveDto parameter)
-        {
+            RequestResponse<string> response = new();
             try
             {
+                var oPet = _context.Pet.AsNoTracking().FirstOrDefault(f => f.Id == request.Id);
 
-            Pet pet = new();
-            pet.Name = parameter.Name;
-            pet.Species = parameter.Species;
-            pet.Breed = parameter.Breed;
-            pet.Age = parameter.Age;
-            pet.Weight = parameter.Weight;
-            pet.Client = parameter.Client;
-            pet.State = 1;
+                if (oPet == null)
+                    return response.CreateUnsuccessful("No se encontró información para la Mascota");
 
-            _context.Pet.Add(pet);
-            _context.SaveChanges();
-
-
-            return "Registro Exitoso";
-            }
-            catch (Exception ex)
-            {
-
-                return ex.Message;
-            }
-        }
-
-        public string Update(PetUpdateDto parameter)
-        {
-            try
-            {
-                Pet pet = _context.Pet.FirstOrDefault(f => f.Id == parameter.Id);
-                if (pet == null)
-                {
-                    return "El usuario no existe";
-                }
-
-                pet.Name = parameter.Name;
-                pet.Species = parameter.Species;
-                pet.Breed = parameter.Breed;
-                pet.Age = parameter.Age;
-                pet.Weight = parameter.Weight;
-                pet.State = parameter.State;
-
-
-                _context.Pet.Update(pet);
+                oPet.Name = request.Name;
+                oPet.Age = request.Age;
+                oPet.Species = request.Species;
+                oPet.Breed = request.Breed;
+                oPet.Weight = request.Weight;
+                _context.Pet.Update(oPet);
+                _context.Entry(oPet).Property(r => r.Id).IsModified = false;
                 _context.SaveChanges();
 
-                return "Se actualizó correctamente";
+                return response.CreateSuccessful("La información de la Mascota se actualizó exitosamente");
             }
             catch (Exception ex)
             {
+                return response.CreateError(ex.Message);
+            }
+        }
 
-                return ex.Message;
+        public RequestResponse<string> ChangeState(int id)
+        {
+            RequestResponse<string> response = new();
+            try
+            {
+                var oPet = _context.Pet.AsNoTracking().FirstOrDefault(f => f.Id == id);
+
+                if (oPet == null)
+                    return response.CreateUnsuccessful("No se encontró información para las mascota");
+
+                 oPet.State = (sbyte)(oPet.State == 0 ? 1 : 0);
+                _context.Pet.Update(oPet);
+                _context.Entry(oPet).Property(r => r.Id).IsModified = false;
+                _context.SaveChanges();
+
+                return response.CreateSuccessful("El cambio de estado se realió exitosamente");
+            }
+            catch (Exception ex)
+            {
+                return response.CreateError(ex.Message);
             }
         }
     }
