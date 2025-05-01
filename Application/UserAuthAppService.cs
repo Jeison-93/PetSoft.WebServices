@@ -28,7 +28,7 @@ namespace PetSoft.WebServices.Application.Interface
                         Name = s.Name,
                         LastName = s.LastName,
                         Phone = s.Phone,
-                        Addresss = s.Addresss,
+                        Address = s.Address,
                         Email = s.Email,
                         UserType = s.UserType,
                     }).FirstOrDefault();

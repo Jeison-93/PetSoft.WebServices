@@ -27,7 +27,7 @@ namespace PetSoft.WebServices.Application
                         Password = s.Password,
                         Phone = s.Phone,
                         Email = s.Email,
-                        Addresss = s.Addresss,
+                        Addresss = s.Address,
                         UserType = s.UserType,
                         State = s.State,
                         StateDescription = s.State == 1 ? "Activo" : "Inactivo"
@@ -49,7 +49,7 @@ namespace PetSoft.WebServices.Application
                      Password = s.Password,
                      Phone = s.Phone,
                      Email = s.Email,
-                     Addresss = s.Addresss, 
+                     Addresss = s.Address, 
                      UserType = s.UserType,
                      State = s.State,
                      StateDescription = s.State == 1 ? "Activo" : "Inactivo"
@@ -81,7 +81,7 @@ namespace PetSoft.WebServices.Application
             user.Password = parameter.Password;
             user.Phone = parameter.Phone;
             user.Email = parameter.Email;
-            user.Addresss = parameter.Addresss;
+            user.Address = parameter.Addresss;
             user.UserType = parameter.UserType;
             user.State = 1;
 
@@ -114,7 +114,7 @@ namespace PetSoft.WebServices.Application
 
                 user.Password = parameter.Password;
                 user.Phone = parameter.Phone;
-                user.Addresss = parameter.Addresss;
+                user.Address = parameter.Address;
                 user.UserType = parameter.UserType;
                 user.State = parameter.State;
 
