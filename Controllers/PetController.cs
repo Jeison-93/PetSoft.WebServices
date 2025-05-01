@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PetSoft.WebServices.Application;
 using PetSoft.WebServices.Application.Interface;
-using PetSoft.WebServices.Data.DTO;
+using PetSoft.WebServices.Data.Dto;
 using PetSoft.WebServices.Helpers;
 
 namespace PetSoft.WebServices.Controllers
