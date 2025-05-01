@@ -176,7 +176,7 @@ public partial class PetsoftdbContext : DbContext
 
             entity.HasIndex(e => e.UserType, "UserType");
 
-            entity.Property(e => e.Addresss).HasMaxLength(100);
+            entity.Property(e => e.Address).HasMaxLength(100);
             entity.Property(e => e.DocumentNumber).HasMaxLength(50);
             entity.Property(e => e.DocumentType).HasMaxLength(10);
             entity.Property(e => e.Email).HasMaxLength(100);
