@@ -1,6 +1,6 @@
-﻿namespace PetSoft.WebServices.Data.Dto.Pet
+﻿namespace PetSoft.WebServices.Data.Dto
 {
-    public class PetSaveDto
+    public class PetRequestDTO
     {
         public string Name { get; set; } = null!;
 

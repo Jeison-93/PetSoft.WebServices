@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PetSoft.WebServices.Application.Interface;
-using PetSoft.WebServices.Data.DTO;
+using PetSoft.WebServices.Data.Dto;
 using PetSoft.WebServices.Data.Models;
 using PetSoft.WebServices.Helpers;
 
