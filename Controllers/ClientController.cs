@@ -4,6 +4,7 @@ using PetSoft.WebServices.Application;
 using PetSoft.WebServices.Application.Interface;
 using PetSoft.WebServices.Data.Dto;
 using PetSoft.WebServices.Data.Dto.Client;
+using PetSoft.WebServices.Helpers;
 
 namespace PetSoft.WebServices.Controllers
 {
@@ -20,46 +21,62 @@ namespace PetSoft.WebServices.Controllers
 
 
         [HttpGet]
-        [Route("Get")]
-        public ClientGetDto Get(int id)
+        [Route(nameof(Get))]
+        public async Task<RequestResponse<ClientGetDto>> Get(int Id)
         {
-            return _ClientAppService.Get(id);
+            return await Task.Run(() =>
+            {
+                return _ClientAppService.Get(Id);
+            });
         }
 
 
         [HttpGet]
         [Route("GetAll")]
-        public IEnumerable<ClientGetDto>  GetAll()
+        public async Task<RequestResponse<IEnumerable<ClientGetDto>>> GetAll()
         {
             return _ClientAppService.GetAll();
         }
 
         [HttpGet]
-        [Route("GetState")]
-        public IEnumerable<ClientGetDto> GetState(int state)
+        [Route(nameof(GetState))]
+        public async Task<RequestResponse<IEnumerable<GenericTableDto>>> GetState()
         {
-            return _ClientAppService.GetState(state);
+            return await Task.Run(() =>
+            {
+                return _ClientAppService.GetState();
+            });
         }
 
         [HttpPost]
-        [Route("Save")]
-        public string Save(ClientSaveDto parameter)
+        [Route(nameof(Save))]
+        public async Task<RequestResponse<string>> Save(ClientSaveDto parameter)
         {
-            return _ClientAppService.Save(parameter);
+            return await Task.Run(() =>
+            {
+                return _ClientAppService.Save(parameter);
+            });
+                
         }
 
         [HttpPut]
-        [Route("Update")]
-        public string Update(ClientUpdateDto parameter)
+        [Route(nameof(Update))]
+        public async Task<RequestResponse<string>> Update(ClientUpdateDto parameter)
         {
-            return _ClientAppService.Update(parameter);
+            return await Task.Run(() =>
+            {
+                return _ClientAppService.Update(parameter);
+            });
         }
 
         [HttpPut]
-        [Route("ChangeState")]
-        public string ChangeState(int Id)
-        {
-            return (_ClientAppService.ChangeState(Id));
+        [Route(nameof(ChangeState))]
+        public async Task<RequestResponse<string>> ChangeState(int Id)
+        {   
+            return await Task.Run(()=>
+            { 
+            return _ClientAppService.ChangeState(Id);
+            });
         }
 
     }
