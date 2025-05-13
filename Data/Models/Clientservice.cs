@@ -9,7 +9,9 @@ public partial class Clientservice
 
     public int Pet { get; set; }
 
-    public DateTime DateServices { get; set; }
+    public string DateService { get; set; } = null!;
+
+    public string HourService { get; set; } = null!;
 
     public string ServiceType { get; set; } = null!;
 
