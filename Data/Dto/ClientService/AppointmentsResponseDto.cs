@@ -1,8 +1,6 @@
-﻿using PetSoft.WebServices.Data.Models;
-
-namespace PetSoft.WebServices.Data.Dto.ClientServices
+﻿namespace PetSoft.WebServices.Data.Dto.ClientService
 {
-    public class AppointmentsGetDto
+    public class AppointmentsResponseDto
     {
         public int Id { get; set; }
         public int IdClient { get; set; }
@@ -27,5 +25,4 @@ namespace PetSoft.WebServices.Data.Dto.ClientServices
         public string? DateService { get; set; }
         public string? HourService { get; set; }
     }
-          
 }
