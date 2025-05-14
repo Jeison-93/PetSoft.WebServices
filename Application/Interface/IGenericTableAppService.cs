@@ -1,14 +1,11 @@
 ﻿using PetSoft.WebServices.Data.Dto;
+using PetSoft.WebServices.Helpers;
 
 namespace PetSoft.WebServices.Application.Interface
 {
     public interface IGenericTableAppService
     {
-        public IEnumerable<GenericTableDto> GetDocumentType();
-        public IEnumerable<GenericTableDto> GetUserType();
-        public IEnumerable<GenericTableDto> GetServiceType();
-        public IEnumerable<GenericTableDto> GetServiceState();
-        public IEnumerable<GenericTableDto> GetSpecies();
+        public RequestResponse<IEnumerable<GenericTableDto>> Get(string table);
 
     }
 }
