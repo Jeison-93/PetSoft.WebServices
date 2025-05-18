@@ -34,6 +34,7 @@ namespace PetSoft.WebServices.Application
                             Phone = s.Phone,
                             Email = s.Email,
                             Addresss = s.Address,
+                            UserTypeDescription = s.UserTypeNavigation.Description,
                             UserType = s.UserType,
                             State = s.State,
                             StateDescription = s.State == 1 ? "Activo" : "Inactivo"
@@ -68,6 +69,7 @@ namespace PetSoft.WebServices.Application
                      Email = s.Email,
                      Addresss = s.Address,
                      UserType = s.UserType,
+                     UserTypeDescription = s.UserTypeNavigation.Description,
                      State = s.State,
                      StateDescription = s.State == 1 ? "Activo" : "Inactivo"
 
