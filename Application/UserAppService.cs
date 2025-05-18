@@ -151,7 +151,8 @@ namespace PetSoft.WebServices.Application
                 oUser.Phone = parameter.Phone;
                 oUser.Address = parameter.Address;
                 oUser.UserType = parameter.UserType;
-                oUser.State = parameter.State;
+                oUser.Name = parameter.Name;
+                oUser.LastName = parameter.LastName;
                 oUser.Email = parameter.Email;
                 oUser.DocumentType = parameter.DocumentType;
                
