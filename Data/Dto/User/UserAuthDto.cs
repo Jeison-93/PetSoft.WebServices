@@ -2,6 +2,7 @@
 {
     public class UserAuthDto
     {
+        public int Id { get; set; }
         public string DocumentType { get; set; } = null!;
 
         public string DocumentNumber { get; set; } = null!;

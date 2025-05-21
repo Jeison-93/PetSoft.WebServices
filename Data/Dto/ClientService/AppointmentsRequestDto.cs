@@ -1,7 +1,7 @@
 ﻿namespace PetSoft.WebServices.Data.Dto.ClientService
 {
     public class AppointmentsRequestDto
-    {
+    {   public string Id { get; set; } = null!;
         public int IdPet { get; set; }
         public string DateService { get; set; } = null!;
         public string HourService { get; set; } = null!;

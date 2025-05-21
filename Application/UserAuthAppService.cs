@@ -22,7 +22,7 @@ namespace PetSoft.WebServices.Application.Interface
                 var result = _context.User.AsNoTracking()
                     .Where(f => f.Email == request.Email && f.Password == request.Password  && f.State == 1)
                     .Select(s => new UserAuthDto()
-                    {
+                    {   Id  = s.Id,
                         DocumentNumber = s.DocumentNumber,
                         DocumentType = s.DocumentType,
                         Name = s.Name,
