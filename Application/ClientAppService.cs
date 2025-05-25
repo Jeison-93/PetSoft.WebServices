@@ -29,7 +29,7 @@ namespace PetSoft.WebServices.Application
                      LastName = s.LastName,
                      Phone = s.Phone,
                      Email = s.Email,
-                     Addresss = s.Addresss,
+                     Addresss = s.Address,
                      State = s.State,
                      StateDescription = s.State == 1 ? "activo" : "inactivo"
                  }).FirstOrDefault();
@@ -49,7 +49,7 @@ namespace PetSoft.WebServices.Application
                      LastName = s.LastName,
                      Phone = s.Phone,
                      Email = s.Email,
-                     Addresss = s.Addresss,
+                     Addresss = s.Address,
                      State = s.State,
                      StateDescription = s.State == 1 ? "activo" : "inactivo"
                  });
@@ -70,7 +70,7 @@ namespace PetSoft.WebServices.Application
                      LastName = s.LastName,
                      Phone = s.Phone,
                      Email = s.Email,
-                     Addresss = s.Addresss,
+                     Addresss = s.Address,
                      State = s.State,
                      StateDescription = s.State == 1 ? "activo" : "inactivo"
                  });
@@ -96,7 +96,7 @@ namespace PetSoft.WebServices.Application
                 client.LastName = parameter.LastName;
                 client.Phone = parameter.Phone;
                 client.Email = parameter.Email;
-                client.Addresss = parameter.Addresss;
+                client.Address = parameter.Address;
                 client.State = 1;
 
                 _context.Client.Add(client);
@@ -131,7 +131,7 @@ namespace PetSoft.WebServices.Application
 
                 client.Phone = parameter.Phone;
                 client.Email = parameter.Email;
-                client.Addresss = parameter.Addresss;
+                client.Address = parameter.Address;
                 client.State = parameter.State;
 
                 _context.Client.Update(client);
