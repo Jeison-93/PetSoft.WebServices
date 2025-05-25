@@ -9,7 +9,7 @@
         public string ClientName { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Phone { get; set; } = null!;
-        public string? Addresss { get; set; }
+        public string? Address { get; set; }
         public int IdPet { get; set; }
         public string PetName { get; set; } = null!;
         public string Species { get; set; } = null!;
