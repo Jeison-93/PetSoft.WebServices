@@ -33,7 +33,7 @@ namespace PetSoft.WebServices.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<RequestResponse<IEnumerable<ClientGetDto>>> GetAll()
+        public async Task<RequestResponse   <IEnumerable<ClientGetDto>>> GetAll()
         {
             return _ClientAppService.GetAll();
         }
