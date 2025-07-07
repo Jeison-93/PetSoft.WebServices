@@ -74,14 +74,11 @@
         /// <returns></returns>
         public RequestResponse<T> CreateUnsuccessful(string messages)
         {
+            
             IsSuccessful = false;
             IsError = false;
             Message = messages ?? string.Empty;
             return this;
         }
-
-
-
-
     }
 }
