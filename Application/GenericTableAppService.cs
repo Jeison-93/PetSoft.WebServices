@@ -16,7 +16,7 @@ namespace PetSoft.WebServices.Application
             _context = context;
         }
 
-        public RequestResponse<IEnumerable<GenericTableDto>> Get(string table)
+        public RequestResponse<IEnumerable<GenericTableDto>> Get(string table)  
         {
             {
                 RequestResponse<IEnumerable<GenericTableDto>> response = new();
