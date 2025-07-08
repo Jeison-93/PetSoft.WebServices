@@ -39,7 +39,9 @@ public partial class PetsoftdbContext : DbContext
 
             entity.HasIndex(e => e.DocumentType, "DocumentType");
 
-            entity.Property(e => e.Addresss).HasMaxLength(100);
+            entity.Property(e => e.Address)
+                .HasMaxLength(100)
+                .HasColumnName("address");
             entity.Property(e => e.DocumentNumber).HasMaxLength(50);
             entity.Property(e => e.DocumentType).HasMaxLength(10);
             entity.Property(e => e.Email).HasMaxLength(100);
@@ -69,7 +71,8 @@ public partial class PetsoftdbContext : DbContext
 
             entity.HasIndex(e => e.UserUpdate, "UserUpdate");
 
-            entity.Property(e => e.DateServices).HasColumnType("timestamp");
+            entity.Property(e => e.DateService).HasMaxLength(20);
+            entity.Property(e => e.HourService).HasMaxLength(20);
             entity.Property(e => e.SaveDate).HasColumnType("timestamp");
             entity.Property(e => e.ServiceState).HasMaxLength(10);
             entity.Property(e => e.ServiceType).HasMaxLength(10);
@@ -176,7 +179,7 @@ public partial class PetsoftdbContext : DbContext
 
             entity.HasIndex(e => e.UserType, "UserType");
 
-            entity.Property(e => e.Addresss).HasMaxLength(100);
+            entity.Property(e => e.Address).HasMaxLength(100);
             entity.Property(e => e.DocumentNumber).HasMaxLength(50);
             entity.Property(e => e.DocumentType).HasMaxLength(10);
             entity.Property(e => e.Email).HasMaxLength(100);

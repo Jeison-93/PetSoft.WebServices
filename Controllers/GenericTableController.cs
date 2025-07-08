@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PetSoft.WebServices.Application.Interface;
 using PetSoft.WebServices.Data.Dto;
 using PetSoft.WebServices.Data.Models;
+using PetSoft.WebServices.Helpers;
 
 namespace PetSoft.WebServices.Controllers
 {
@@ -10,47 +11,21 @@ namespace PetSoft.WebServices.Controllers
     [ApiController]
     public class GenericTableController : ControllerBase
     {
-        private readonly IGenericTableAppService _genericTableaAppService;
+        private readonly IGenericTableAppService _genericTableAppService;
 
-        public GenericTableController(IGenericTableAppService genericTableaAppService) 
+        public GenericTableController(IGenericTableAppService genericTableAppService)
         {
-            _genericTableaAppService = genericTableaAppService;
+            _genericTableAppService = genericTableAppService;
         }
 
         [HttpGet]
-        [Route("GetDocumenType")]
-        public IEnumerable<GenericTableDto> GetDocumenType() 
+        [Route(nameof(GetTable))]
+        public async Task<RequestResponse<IEnumerable<GenericTableDto>>> GetTable(string table)
         {
-            return _genericTableaAppService.GetDocumentType();
-        }
-
-
-        [HttpGet]
-        [Route("GetServiceState")]
-        public IEnumerable<GenericTableDto> GetServiceState()
-        {
-            return _genericTableaAppService.GetServiceState();
-        }
-
-        [HttpGet]
-        [Route("GetServiceType")]
-        public IEnumerable<GenericTableDto> GetServiceType()
-        {
-            return _genericTableaAppService.GetServiceType();
-        }
-
-        [HttpGet]
-        [Route("GetSpecies")]
-        public IEnumerable<GenericTableDto> GetSpecies()
-        {
-            return _genericTableaAppService.GetSpecies();
-        }
-
-        [HttpGet]
-        [Route("GetUserType")]
-        public IEnumerable<GenericTableDto> GetUserType()
-        {
-            return _genericTableaAppService.GetUserType();
+            return await Task.Run(() =>
+            {
+                return _genericTableAppService.Get(table);
+            });
         }
     }
 }

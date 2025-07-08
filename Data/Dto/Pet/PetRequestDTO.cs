@@ -1,8 +1,7 @@
-﻿namespace PetSoft.WebServices.Data.Dto.Pet
+﻿namespace PetSoft.WebServices.Data.Dto
 {
-    public class PetSaveDto
+    public class PetRequestDTO
     {
-
         public string Name { get; set; } = null!;
 
         public string Species { get; set; } = null!;
@@ -14,7 +13,5 @@
         public decimal? Weight { get; set; }
 
         public int Client { get; set; }
-
-
     }
 }

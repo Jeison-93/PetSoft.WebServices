@@ -1,4 +1,5 @@
 ﻿using PetSoft.WebServices.Data.Dto;
+using PetSoft.WebServices.Helpers;
 using System.Collections;
 
 namespace PetSoft.WebServices.Application.Interface
@@ -10,27 +11,27 @@ namespace PetSoft.WebServices.Application.Interface
         /// </summary>
         /// <param name="id">Id del usuario</param>
         /// <returns></returns>
-        public UserGetDto Get(int id);
+        public RequestResponse<UserGetDto> Get(int id);
         /// <summary>
         /// Mètodo para recuperar una lista lista de usuarios
         /// </summary>
         /// <returns></returns>
-        public IEnumerable <UserGetDto> GetAll();
+        public RequestResponse<IEnumerable<UserGetDto>> GetAll();
 
         /// <summary>
         /// Mètodo para crear un usuario
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public string Save(UserSaveDto parameter);
+        public RequestResponse<string> Save(UserSaveDto parameter);
         /// <summary>
         /// Mètodo para actualizar un usuario.
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        public string Update(UserUpdateDto parameter);
+        public RequestResponse<string> Update(UserUpdateDto parameter);
 
-        public string ChangeState(int Id);
+        public RequestResponse<string> ChangeState(int Id);
 
     }
 }

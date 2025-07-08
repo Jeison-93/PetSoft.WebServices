@@ -1,6 +1,9 @@
-﻿using PetSoft.WebServices.Application.Interface;
+﻿using Microsoft.EntityFrameworkCore;
+using PetSoft.WebServices.Application.Interface;
+using PetSoft.WebServices.Data.Data;
 using PetSoft.WebServices.Data.Dto;
 using PetSoft.WebServices.Data.Models;
+using PetSoft.WebServices.Helpers;
 
 namespace PetSoft.WebServices.Application
 {
@@ -12,86 +15,77 @@ namespace PetSoft.WebServices.Application
         {
             _context = context;
         }
-        /// <summary>
-        /// servicio para devolver los tipos de docuemntos
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<GenericTableDto> GetDocumentType()
-        {
-            var result = _context.Documenttype
-                .Where(f => f.State == 1)
-                .Select(s => new GenericTableDto()
-            {
-                Code = s.Code,
-                Description = s.Description
-            });
-            return result;
-        }
 
-        /// <summary>
-        /// servicio para devolver los estados de los servicios
-        /// </summary>
-        /// <returns></returns>
-
-        public IEnumerable<GenericTableDto> GetServiceState()
+        public RequestResponse<IEnumerable<GenericTableDto>> Get(string table)  
         {
-            var result = _context.Servicestate
-                .Where(f => f.State == 1)
-                .Select(s => new GenericTableDto()
             {
-                Code = s.Code,
-                Description = s.Description
-            });
-            return result;
-        }
+                RequestResponse<IEnumerable<GenericTableDto>> response = new();
+                try
+                {
+                    GenericTableEnum tableEnum = table.ToEnum<GenericTableEnum>();
 
-        /// <summary>
-        /// servicio para devolver los tipos de los servicios
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<GenericTableDto> GetServiceType()
-        {
-            var result = _context.Servicetype
-                .Where(f => f.State == 1)
-                .Select(s => new GenericTableDto()
-            {
-                Code = s.Code,
-                Description = s.Description,
-                Value = s.Value
-            });
-            return result;
-        }
+                    switch (tableEnum)
+                    {
+                        case GenericTableEnum.DocumentType:
+                            var documentType = from dt in _context.Documenttype.AsNoTracking()
+                                               select new GenericTableDto()
+                                               {
+                                                   Code = dt.Code,
+                                                   Description = dt.Description,
+                                               };
+                            response.CreateSuccessful(documentType);
+                            break;
+                        case GenericTableEnum.ServiceState:
+                            var serviceState = from dt in _context.Servicestate.AsNoTracking()
+                                               select new GenericTableDto()
+                                               {
+                                                   Code = dt.Code,
+                                                   Description = dt.Description,
+                                               };
+                            response.CreateSuccessful(serviceState);
+                            break;
+                        case GenericTableEnum.UserType:
+                            var userType = from dt in _context.Usertype.AsNoTracking()
+                                           select new GenericTableDto()
+                                           {
+                                               Code = dt.Code,
+                                               Description = dt.Description,
+                                           };
+                            response.CreateSuccessful(userType);
+                            break;
+                        case GenericTableEnum.Species:
+                            var species = from dt in _context.Species.AsNoTracking()
+                                          select new GenericTableDto()
+                                          {
+                                              Code = dt.Code,
+                                              Description = dt.Description,
+                                          };
+                            response.CreateSuccessful(species);
+                            break;
+                        case GenericTableEnum.ServiceType:
+                            var serviceType = from dt in _context.Servicetype.AsNoTracking()
+                                              select new GenericTableDto()
+                                              {
+                                                  Code = dt.Code,
+                                                  Description = dt.Description,
+                                                  Value = dt.Value
+                                              };
+                            response.CreateSuccessful(serviceType);
+                            break;
+                        default:
+                            break;
+                    }
+                    return response;
+                }
+                catch (Exception ex)
+                {
+                    return response.CreateError(ex.Message);
+                }
 
-        /// <summary>
-        /// servicio para devolver los tipos de especies
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<GenericTableDto> GetSpecies()
-        {
-            var result = _context.Species
-                .Where(f=>f.State==1)
-                .Select(s => new GenericTableDto()
-            {
-                Code = s.Code,
-                Description = s.Description
-            });
-            return result;
-        }
-
-        /// <summary>
-        /// servicio para devolver los tipos de usuarios
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<GenericTableDto> GetUserType()
-        {
-            var result = _context.Usertype
-                .Where(f => f.State == 1)
-                .Select(s => new GenericTableDto()
-            {
-                Code = s.Code,
-                Description = s.Description
-            });
-            return result;
+            }
         }
     }
+
+        
+    
 }

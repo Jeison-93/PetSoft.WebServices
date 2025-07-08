@@ -14,6 +14,8 @@ builder.Services.AddScoped<IUserAppService, UserAppService>();
 builder.Services.AddScoped<IClientAppService, ClientAppService>();
 builder.Services.AddScoped<IAuthAppService, UserAuthAppService>();
 builder.Services.AddScoped<IPetAppService, PetAppService>();
+builder.Services.AddScoped<IAppointmentsAppService, AppointmentsAppService>();
+builder.Services.AddScoped<IReportAppService, ReportAppService>();
 
 
 builder.Services.AddControllers();
@@ -38,6 +40,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseCors(options => options.WithOrigins("*").AllowAnyMethod().AllowAnyHeader());
 
 app.MapControllers();
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PetSoft.WebServices.Application.Interface;
 using PetSoft.WebServices.Data.Dto.User;
+using PetSoft.WebServices.Helpers;
 
 namespace PetSoft.WebServices.Controllers
 {
@@ -14,11 +15,17 @@ namespace PetSoft.WebServices.Controllers
         {
             _appService = appService;
         }
+
+
+
         [HttpPost]
-        [Route("Login")]
-        public UserAuthDto Login(UserParamAuthDto request)
+        [Route(nameof(RequestLogin))]
+        public async Task<RequestResponse<UserAuthDto>> RequestLogin(UserParamAuthDto request)
         {
-            return _appService.Login(request);
+            return await Task.Run(() =>
+            {
+                return _appService.Login(request);
+            });
         }
 
     }

@@ -1,6 +1,8 @@
-﻿using PetSoft.WebServices.Data.Dto;
+﻿using Microsoft.EntityFrameworkCore;
+using PetSoft.WebServices.Data.Dto;
 using PetSoft.WebServices.Data.Dto.User;
 using PetSoft.WebServices.Data.Models;
+using PetSoft.WebServices.Helpers;
 
 namespace PetSoft.WebServices.Application.Interface
 {
@@ -11,25 +13,35 @@ namespace PetSoft.WebServices.Application.Interface
         {
             _context = context;
         }
-        public UserAuthDto Login(UserParamAuthDto request)
+
+        public RequestResponse<UserAuthDto> Login(UserParamAuthDto request)
         {
-            var result = _context.User
-                .Where(f => f.Email == request.Email && f.Password == request.Password && f.State ==1 )
-                .Select(s => new UserAuthDto()
-                {
-                    DocumentType = s.DocumentType,
-                    DocumentNumber = s.DocumentNumber,
-                    Name = s.Name,
-                    LastName = s.LastName,
-                    Password = s.Password,
-                    Phone = s.Phone,
-                    Email = s.Email,
-                    Addresss = s.Addresss,
-                    UserType = s.UserType,
+            RequestResponse<UserAuthDto> response = new();
+            try
+            {
+                var result = _context.User.AsNoTracking()
+                    .Where(f => f.Email == request.Email && f.Password == request.Password  && f.State == 1)
+                    .Select(s => new UserAuthDto()
+                    {   Id  = s.Id,
+                        DocumentNumber = s.DocumentNumber,
+                        DocumentType = s.DocumentType,
+                        Name = s.Name,
+                        LastName = s.LastName,
+                        Phone = s.Phone,
+                        Address = s.Address,
+                        Email = s.Email,
+                        UserType = s.UserType,
+                    }).FirstOrDefault();
 
-                }).FirstOrDefault();// instruccion para recuperar el primer dato de la consulta
+                if (result == null)
+                    return response.CreateUnsuccessful("No se encontró información en la base de datos");
 
-            return result != null ? result : new UserAuthDto();
+                return response.CreateSuccessful(result);
+            }
+            catch (Exception ex)
+            {
+                return response.CreateError(ex.Message);
+            }
         }
     }
 }

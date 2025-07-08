@@ -6,9 +6,9 @@
     /// </summary>
     public class GenericTableDto
     {
-        public string Code { get; set; } = null!;
+        public string? Code { get; set; }
 
-        public string Description { get; set; } = null!;
+        public string? Description { get; set; }
 
         public double? Value { get; set; }
     }

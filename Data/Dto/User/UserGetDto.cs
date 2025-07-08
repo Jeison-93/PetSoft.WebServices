@@ -20,7 +20,8 @@
 
         public string? Password { get; set; }
 
-        public string UserType { get; set; } = null!;
+        public string UserType { get; set; } = null!; 
+        public string UserTypeDescription { get; set; } = null!;
 
         public sbyte State { get; set; }
 

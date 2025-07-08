@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PetSoft.WebServices.Application;
 using PetSoft.WebServices.Application.Interface;
 using PetSoft.WebServices.Data.Dto;
+using PetSoft.WebServices.Helpers;
 
 namespace PetSoft.WebServices.Controllers
 {
@@ -16,33 +17,72 @@ namespace PetSoft.WebServices.Controllers
             _userAppService = userAppService;
         }
 
+
+        /// <summary>
+        /// recupera todos los usuarios
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        [Route("GetAll")]
-        public IEnumerable<UserGetDto> GetAll()
+        [Route(nameof(GetAll))]
+        public async Task<RequestResponse<IEnumerable<UserGetDto>>> GetAll()
         {
-            return _userAppService.GetAll();
+            return await Task.Run(() =>
+            {
+                return _userAppService.GetAll();
+            });
         }
 
+        /// <summary>
+        /// recupera un usuario por el ID.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route(nameof(Get))]
+        public async Task<RequestResponse<UserGetDto>> Get(int Id)
+        {
+            return await Task.Run(() =>
+            {
+                return _userAppService.Get(Id);
+            });
+        }
+
+        /// <summary>
+        /// graba un usuario en la bd.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("Save")]
-        public string Save(UserSaveDto parameter)
+        [Route(nameof(Save))]
+        public async Task<RequestResponse<string>> Save(UserSaveDto parameter)
         {
             return _userAppService.Save(parameter);
         }
-
+        /// <summary>
+        /// actualiza un usuario en la bd.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         [HttpPut]
-        [Route("Update")]
-        public string Update(UserUpdateDto parameter)
+        [Route(nameof(Update))]
+        public async Task<RequestResponse<string>> Update(UserUpdateDto parameter)
         {
             return _userAppService.Update(parameter);
         }
 
-
+        /// <summary>
+        /// cambia el estado de un usuario en la bd.
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         [HttpPut]
-        [Route("ChangeState")]
-        public string ChangeState(int Id)
+        [Route(nameof(ChangeState))]
+        public async Task<RequestResponse<string>> ChangeState(int Id)
         {
-            return (_userAppService.ChangeState(Id));
+            return await Task.Run(() =>
+            {
+                return _userAppService.ChangeState(Id);
+            });
         }
     }
 }
